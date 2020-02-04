@@ -1,0 +1,32 @@
+{
+  "name": "t2-backend-api-Ashish911",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/softwarica-github/t2-backend-api-Ashish911.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/softwarica-github/t2-backend-api-Ashish911/issues"
+  },
+  "homepage": "https://github.com/softwarica-github/t2-backend-api-Ashish911#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "init": "^0.1.2",
+    "jest": "^25.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.11"
+  }
+}
