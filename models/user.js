@@ -9,8 +9,7 @@ const UserSchema = new mongoose.Schema({
     UserName: {
         type:String,
         min:3,
-        required:true,
-        unique:true
+        required:true
     },
     Email: {
         type:String,
@@ -27,10 +26,6 @@ const UserSchema = new mongoose.Schema({
         type:String,
         min:8,
         required:true
-    },
-    admin: {
-        type:Boolean,
-        default:false
     }
 })
 

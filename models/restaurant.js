@@ -1,36 +1,28 @@
 const mongoose = require('mongoose');
 
 const RestaurantSchema = new mongoose.Schema({
-    RestaurantName: {
+    Name: {
         type: String,
         min: 3,
         required: true
     },
-    RestaurantLogo: {
+    Logo: {
         type:String,
         required:true
     },
-    RestaurantBG: {
+    Tags: {
         type:String,
         required:true
     },
-    RestaurantTags: {
+    Location: {
         type:String,
         required:true
     },
-    RestaurantLocation: {
+    Delivery: {
         type:String,
         required:true
-    },
-    RestaurantDelivery: {
-        type:String,
-        required:true
-    },
-    Category: {
-        type: mongoose.Schema.Type.ObjectId,
-        ref: 'Category'
     }
 })
 
-const Category = mongoose.model('Category', CategorySchema)
-module.exports = Category
+const Restaurant = mongoose.model('Restaurant', RestaurantSchema)
+module.exports = Restaurant
