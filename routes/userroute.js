@@ -7,7 +7,7 @@ const auth = require('../auth');
 const router = express.Router();
 
 //get all users in admin panel.
-router.get('/userlist', (req,res)=>{
+router.get('/', (req,res)=>{
     User.find({})
     .then((userlists)=>{
         res.send(userlists);
@@ -65,13 +65,14 @@ router.post('/login', (req, res, next) => {
                             return next(err);
                         }
                         let token = jwt.sign({ _id: user._id }, jwtSecret);
-                        res.json({ status: 'Login success!', token: token });
+                        let id = user._id;
+                        res.json({ id, status: 'Login success!', token: token });
                     }).catch(next);
             }
         }).catch(next);
 })
 
-router.delete('/deleteuser/:id', function(req, res){
+router.delete('/:id', function(req, res){
     //console.log(req.params.id);
     Users.findByIdAndDelete(req.params.id).then(function(){
         res.send("deleted")
@@ -79,7 +80,6 @@ router.delete('/deleteuser/:id', function(req, res){
         res.send(e)
     })
     })
-
 
 router.get('/me', auth.verifyUser, (req, res, next) => {
     res.json({ _id: req.user._id, FullName: req.user.FullName,

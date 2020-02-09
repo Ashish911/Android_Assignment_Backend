@@ -47,7 +47,7 @@ const upload = multer({
 });
 
 //post products or items
-router.post('/save',upload.single('Logo'),(req,res)=>{
+router.post('/',upload.single('Logo'),(req,res)=>{
     let newRestaurant = new Restaurant({
         Name: req.body.Name,
         Logo: req.file.filename,
@@ -62,7 +62,7 @@ router.post('/save',upload.single('Logo'),(req,res)=>{
 });
 
 //get single restaurant or items by id
-router.patch('/restaurant/:restaurantid',upload.single('Logo'),(req, res) => {
+router.patch('/:restaurantid',upload.single('Logo'),(req, res) => {
     // We want to upload a image in a restaurant specified by restaurantId
     Restaurant.findOne({
         _id: req.params.restaurantid

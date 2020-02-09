@@ -49,7 +49,7 @@ router.put('/:id', ((req,res,next)=>{
 }));
 
 //get single food and delete
-router.delete('/deletefood/:id', function(req,res){
+router.delete('/:id', function(req,res){
     Food.findByIdAndDelete(req.params.id).then(function(){
         res.send("deleted")
     }).catch(function(){
