@@ -70,30 +70,30 @@ router.delete('/:id', function(req,res){
 //     })
 // })
 
-// router.post('/', (req,res,next)=>{
-//     Restaurant.findById(req.body.restaurantId)
-//         .then(restaurant =>{
-//             if (!restaurant) {
-//                 return res.send('Product Not Found');
-//             }
-//             const food = new Food({
-//                 _id: mongoose.Types.ObjectId(),
-//                 Name: req.body.Name,
-//                 Price: req.body.Price,
-//                 restaurant: req.body.restaurantId
-//             });
-//             return food.save()
-//         })
-//         .then(result=>{
-//             console.log(result);
-//             res.status(201)
-//             res.send(result);
-//         })
-//         .catch(err=>{
-//             console.log(err)
-//             err.status(500)
-//             err.send(err)
-//             })
-//     })
+router.post('/', (req,res,next)=>{
+    Restaurant.findById(req.body.restaurantId)
+        .then(restaurant =>{
+            if (!restaurant) {
+                return res.send('Product Not Found');
+            }
+            const food = new Food({
+                _id: mongoose.Types.ObjectId(),
+                Name: req.body.Name,
+                Price: req.body.Price,
+                restaurant: req.body.restaurantId
+            });
+            return food.save()
+        })
+        .then(result=>{
+            console.log(result);
+            res.status(201)
+            res.send(result);
+        })
+        .catch(err=>{
+            console.log(err)
+            err.status(500)
+            err.send(err)
+            })
+    })
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const RestaurantSchema = new mongoose.Schema({
+
     Name: {
         type: String,
         min: 3,
@@ -20,6 +21,10 @@ const RestaurantSchema = new mongoose.Schema({
     },
     Delivery: {
         type:String,
+        required:true
+    },
+    Categoryid: {
+        type: String,
         required:true
     }
 })

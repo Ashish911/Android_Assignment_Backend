@@ -1,5 +1,6 @@
 const express = require('express');
 const Restaurant = require('../models/restaurant');
+const Category = require('../models/categories');
 const multer=require('multer')
 const path=require("path");
 const router = express.Router();
@@ -48,18 +49,31 @@ const upload = multer({
 
 //post products or items
 router.post('/',upload.single('Logo'),(req,res)=>{
-    let newRestaurant = new Restaurant({
-        Name: req.body.Name,
-        Logo: req.file.filename,
-        Tags: req.body.Tags,
-        Location: req.body.Location,
-        Delivery: req.body.Delivery,
-        Category: req.body.Category
-    });
-    newRestaurant.save().then((restaurantDoc)=>{
-        res.send(restaurantDoc);
-    });
+
+        let newRestaurant = new Restaurant({
+            Name: req.body.Name,
+            Logo: req.file.filename,
+            Tags: req.body.Tags,
+            Location: req.body.Location,
+            Delivery: req.body.Delivery,
+            Categoryid: req.body.Categoryid
+        });
+        newRestaurant.save().then((CategoryDoc)=>{
+            res.send(CategoryDoc);
+        });
 });
+
+router.get('/getByCategory/:id', async(req,res)=>{
+    try{
+        console.log("here")
+        const id = req.params.id
+        const data = await Restaurant.find({Categoryid:id})
+        res.json({data:data,message:true})
+    }
+    catch(err){
+        res.json({message:false, error:err})
+    }
+})
 
 //get single restaurant or items by id
 router.patch('/:restaurantid',upload.single('Logo'),(req, res) => {
