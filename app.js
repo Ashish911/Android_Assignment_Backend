@@ -10,7 +10,6 @@ const FoodRouter = require('./routes/food');
 const FavouriteRouter = require('./routes/favouriteroute');
 const OrderRouter = require('./routes/orderroute');
 const CategoryRouter = require('./routes/categoriesroute');
-const ImageRouter = require('./routes/upload');
 
 app.use(morgan('dev')); 
 
@@ -21,7 +20,8 @@ app.use(function (req,res,next) {
     next();
 });
 
-app.use('/upload',express.static(__dirname+'/uploads'));
+app.use('/upload',express.static(__dirname+'/upload/Category'));
+
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
 app.use(express.urlencoded({extended:true}));
@@ -32,8 +32,6 @@ app.use('/food', FoodRouter);
 app.use('/favourite', FavouriteRouter);
 app.use('/order', OrderRouter);
 app.use('/category', CategoryRouter);
-
-app.use('/uploadImage', ImageRouter);
 
 app.use((req,res,next)=>{
     const error=new Error('Not Found');
