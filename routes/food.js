@@ -4,15 +4,36 @@ const Food = require('../models/food')
 const Restaurant = require('../models/restaurant');
 const router = express.Router()
 
+//path to store image
+const storage = multer.diskStorage({
+    destination: "./upload/Images",
+    filename: (req, file, callback) => {
+        let ext = path.extname(file.originalname);
+        callback(null, `${file.fieldname}-${Date.now()}${ext}`);
+    }
+});
+
+//check file types
+const imageFileFilter = (req, file, cb) => {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+        return cb(new Error("You can upload only image files!"), false);
+    }
+    cb(null, true);
+};
+const upload = multer({
+    storage: storage,
+    fileFilter: imageFileFilter
+});
+
+
 //get all the foods 
-router.get('/', async(req, res) => {
-    try{
-        const data = await Food.find({})
-        res.json({data:data,message:true})
-    }
-    catch(err){
-        res.json({message:false, error:err})
-    }
+router.get('/', (req, res) => {
+    Food.find({})
+        .then((foodlist)=>{
+            res.send(foodlist);
+        }).catch((err)=>{
+        res.send('Error', err.message)
+    })
 })
 
 //post foods
@@ -39,6 +60,19 @@ router.get('/:id', (req,res,next)=>{
     })
 })
 
+
+router.get('/getByCategory/:id', async(req,res)=>{
+    try{
+        console.log("here")
+        const id = req.params.id
+        const data = await Restaurant.find({Categoryid:id})
+        res.json(data);
+    }
+    catch(err){
+        res.status(404).send(err)
+    }
+})
+
 //get single food and update
 router.put('/:id', ((req,res,next)=>{
     Food.findOneAndUpdate({_id: req.params.id }, {$set: req.body}, {new: true})
@@ -56,44 +90,5 @@ router.delete('/:id', function(req,res){
         res.send(e)
     })
 })
-
-// router.get('/', (req,res,next)=>{
-//     Food.find()
-//     .select('restaurant Name Price')
-//     .then(docs=>{
-//         res.status(200)
-//         res.send(docs)
-//     })
-//     .catch(err=>{
-//         res.status(500)
-//         res.send(err)
-//     })
-// })
-
-router.post('/', (req,res,next)=>{
-    Restaurant.findById(req.body.restaurantId)
-        .then(restaurant =>{
-            if (!restaurant) {
-                return res.send('Product Not Found');
-            }
-            const food = new Food({
-                _id: mongoose.Types.ObjectId(),
-                Name: req.body.Name,
-                Price: req.body.Price,
-                restaurant: req.body.restaurantId
-            });
-            return food.save()
-        })
-        .then(result=>{
-            console.log(result);
-            res.status(201)
-            res.send(result);
-        })
-        .catch(err=>{
-            console.log(err)
-            err.status(500)
-            err.send(err)
-            })
-    })
 
 module.exports = router;
