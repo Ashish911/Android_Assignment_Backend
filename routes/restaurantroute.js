@@ -63,13 +63,13 @@ router.post('/',upload.single('Logo'),(req,res)=>{
 });
 
 router.get('/search/:restaurantname', async (req, res) => {
-    const searchTitle = req.params.restaurantname;
-    console.log(searchTitle);
-    const apartmentpost = Apartmentpost.find({ $text: {$search: searchTitle } })
-        .then(apartmentpost => res.send(apartmentpost))
-        .catch(err => res.status(404).send(err))
-    if(!apartmentpost){
-        res.status(200).send("No title found! Enter correct title")
+    const searchName = req.params.restaurantname;
+    console.log(searchName);
+    try {
+        const search = await Restaurant.find({$text:{$search:searchName}})
+        res.send(search);
+    } catch (error) {
+        res.status(400).send(error)
     }
 });
 
@@ -112,6 +112,16 @@ router.patch('/:restaurantid',upload.single('Logo'),(req, res) => {
         }
     })
 });
+
+router.delete('/', (req, res)=>{
+    Restaurant.deleteMany({})
+        .then((restaurantlist)=>{
+            res.send(restaurantlist);
+        }).catch((err)=>{
+        res.send('Error', err.message)
+    })
+})
+
 
 router.delete('/:restaurantid', (req,res,next)=>{
     const id = req.params.restaurantid;
