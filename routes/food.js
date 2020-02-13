@@ -1,6 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const Food = require('../models/food')
+const multer = require('multer')
+const path = require('path')
 const Restaurant = require('../models/restaurant');
 const router = express.Router()
 
@@ -37,12 +39,12 @@ router.get('/', (req, res) => {
 })
 
 //post foods
-router.post('/',(req,res)=>{
+router.post('/', upload.single('FoodImage'),(req,res)=>{
     let newFood = new Food({
         FoodName:req.body.FoodName,
-        BookImage:req.body.BookImage,
-        Category:req.body.Category,
-        Price:req.body.Price
+        FoodImage:req.file.filename,
+        Price:req.body.Price,
+        Restaurantid:req.body.Restaurantid
     });
     newFood.save().then((foodDoc)=>{
         res.send(foodDoc);
@@ -61,11 +63,11 @@ router.get('/:id', (req,res,next)=>{
 })
 
 
-router.get('/getByCategory/:id', async(req,res)=>{
+router.get('/getByRestaurant/:id', async(req,res)=>{
     try{
         console.log("here")
         const id = req.params.id
-        const data = await Restaurant.find({Categoryid:id})
+        const data = await Food.find({Restaurantid:id})
         res.json(data);
     }
     catch(err){
@@ -81,6 +83,15 @@ router.put('/:id', ((req,res,next)=>{
             res.json(reply);
         }).catch(next);
 }));
+
+router.delete('/', (req, res)=>{
+    Food.deleteMany({})
+        .then((foodlist)=>{
+            res.send(foodlist);
+        }).catch((err)=>{
+        res.send('Error', err.message)
+    })
+})
 
 //get single food and delete
 router.delete('/:id', function(req,res){

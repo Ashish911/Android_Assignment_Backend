@@ -11,7 +11,7 @@ router.get('/', (req,res)=>{
     })
 });
 
-router.post('/', async (req,res)=>{
+router.post('/',  (req,res)=>{
     let newFavourite = new Favourite({
         userid:req.body.userid,
         restaurantid:req.body.restaurantid
