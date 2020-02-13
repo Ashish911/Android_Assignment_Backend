@@ -5,30 +5,9 @@ const multer=require('multer')
 const path=require("path");
 const router = express.Router();
 
-//get all resturants
-router.get('/', async(req, res) => {
-    try{
-        const data = await Restaurant.find({})
-        res.json({data:data,message:true})
-    }
-    catch(err){
-        res.json({message:false, error:err})
-    }
-})
-
-//get resturant of certain id
-router.get('/:id',(req,res,next)=>{
-    console.log(req.params.id);
-    Restaurant.findById(req.params.id).exec().then(doc=>{
-            res.send(doc.toJSON());
-        }).catch((e)=>{
-            res.send(e);
-        })
-})
-
 //path to store image
 const storage = multer.diskStorage({
-    destination: "./upload/Restaurants",
+    destination: "./upload/Images",
     filename: (req, file, callback) => {
         let ext = path.extname(file.originalname);
         callback(null, `${file.fieldname}-${Date.now()}${ext}`);
@@ -47,11 +26,31 @@ const upload = multer({
     fileFilter: imageFileFilter
 });
 
+//get all resturants
+router.get('/', (req, res) => {
+    Restaurant.find({})
+        .then((restaurantlist)=>{
+            res.send(restaurantlist);
+        }).catch((err)=>{
+        res.send('Error', err.message)
+    })
+})
+
+//get resturant of certain id
+router.get('/:id',(req,res,next)=>{
+    console.log(req.params.id);
+    Restaurant.findById(req.params.id).exec().then(doc=>{
+            res.send(doc.toJSON());
+        }).catch((e)=>{
+            res.send(e);
+        })
+})
+
 //post products or items
 router.post('/',upload.single('Logo'),(req,res)=>{
 
         let newRestaurant = new Restaurant({
-            Name: req.body.Name,
+            RestaurantName: req.body.RestaurantName,
             Logo: req.file.filename,
             Tags: req.body.Tags,
             Location: req.body.Location,

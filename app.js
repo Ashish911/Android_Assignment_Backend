@@ -20,8 +20,6 @@ app.use(function (req,res,next) {
     next();
 });
 
-app.use('/upload',express.static(__dirname+'/upload/Category'));
-
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
 app.use(express.urlencoded({extended:true}));
@@ -32,6 +30,7 @@ app.use('/food', FoodRouter);
 app.use('/favourite', FavouriteRouter);
 app.use('/order', OrderRouter);
 app.use('/category', CategoryRouter);
+app.use('/upload',express.static(__dirname+'/upload/Images'));
 
 app.use((req,res,next)=>{
     const error=new Error('Not Found');
