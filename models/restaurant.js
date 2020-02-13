@@ -20,8 +20,7 @@ const RestaurantSchema = new mongoose.Schema({
         required:true
     },
     Delivery: {
-        type:String,
-        required:true
+        type:String
     },
     Categoryid: {
         type: String,

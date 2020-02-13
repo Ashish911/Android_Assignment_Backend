@@ -78,10 +78,10 @@ router.get('/getByCategory/:id', async(req,res)=>{
         console.log("here")
         const id = req.params.id
         const data = await Restaurant.find({Categoryid:id})
-        res.json({data:data,message:true})
+        res.json(data);
     }
     catch(err){
-        res.json({message:false, error:err})
+        res.status(404).send(err)
     }
 })
 

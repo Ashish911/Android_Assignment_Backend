@@ -1,13 +1,12 @@
 const mongoose = require('mongoose')
 const OrderSchema = new mongoose.Schema({
     Foodid: {
-        type:String
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Food'
     },
     Userid: {
-        type:String
-    },
-    Total: {
-        type:String
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
     }
 })
 
