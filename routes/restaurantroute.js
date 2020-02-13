@@ -63,6 +63,17 @@ router.post('/',upload.single('Logo'),(req,res)=>{
         });
 });
 
+router.get('/search/:restaurantname', async (req, res) => {
+    const searchTitle = req.params.restaurantname;
+    console.log(searchTitle);
+    const apartmentpost = Apartmentpost.find({ $text: {$search: searchTitle } })
+        .then(apartmentpost => res.send(apartmentpost))
+        .catch(err => res.status(404).send(err))
+    if(!apartmentpost){
+        res.status(200).send("No title found! Enter correct title")
+    }
+});
+
 router.get('/getByCategory/:id', async(req,res)=>{
     try{
         console.log("here")
