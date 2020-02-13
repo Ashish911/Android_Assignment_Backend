@@ -28,7 +28,6 @@ const upload = multer({
 
 //post category
 router.post('/', upload.single('CategoryImage'),(req,res)=>{
-    console.log(Category.CategoryImage)
     let newCategory = new Category({
         CategoryName:req.body.CategoryName,
         CategoryImage:req.file.filename
