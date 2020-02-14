@@ -75,6 +75,17 @@ router.get('/getByRestaurant/:id', async(req,res)=>{
     }
 })
 
+router.get('/search/:foodName', async (req, res) => {
+    const searchName = req.params.foodName;
+    console.log(searchName);
+    try {
+        const search = await Food.find({$text:{$search:searchName}})
+        res.send(search);
+    } catch (error) {
+        res.status(400).send(error)
+    }
+});
+
 //get single food and update
 router.put('/:id', ((req,res,next)=>{
     Food.findOneAndUpdate({_id: req.params.id }, {$set: req.body}, {new: true})
