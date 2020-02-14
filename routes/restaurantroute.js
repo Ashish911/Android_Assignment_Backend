@@ -62,16 +62,7 @@ router.post('/',upload.single('Logo'),(req,res)=>{
         });
 });
 
-router.get('/search/:restaurantname', async (req, res) => {
-    const searchName = req.params.restaurantname;
-    console.log(searchName);
-    try {
-        const search = await Restaurant.find({$text:{$search:searchName}})
-        res.send(search);
-    } catch (error) {
-        res.status(400).send(error)
-    }
-});
+
 
 router.get('/getByCategory/:id', async(req,res)=>{
     try{

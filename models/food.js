@@ -21,5 +21,6 @@ const FoodSchema = new mongoose.Schema({
     }
 })
 
+FoodSchema.path('FoodName').index({text:true})
 const Food = mongoose.model('Food', FoodSchema);
 module.exports = Food

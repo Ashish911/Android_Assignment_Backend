@@ -81,18 +81,6 @@ router.delete('/:id', function(req, res){
     })
     })
 
-router.post('/logout', auth.verifyUser, async (req, res) => {
-    try {
-        req.user.tokens = req.user.tokens.filter((token) =>{
-            return token.token !== req.token 
-        })
-        await req.user.save()
-        res.send()
-    } catch (error) {
-        res.status(500).send()
-    }
-});
-
 router.get('/me', auth.verifyUser, (req, res, next) => {
     res.json({ _id: req.user._id, FullName: req.user.FullName,
          UserName: req.user.UserName, Email: req.user.Email, PhoneNo: req.user.PhoneNo });
