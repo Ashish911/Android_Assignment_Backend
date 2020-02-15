@@ -4,9 +4,9 @@ const FavouriteSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     },
-    restaurantid:{
+    foodid:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
+        ref:'Food'
     }
 })
 
