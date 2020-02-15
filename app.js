@@ -3,6 +3,7 @@ const app = express();
 require('./db/mongoose')
 const bodyParser = require('body-parser')
 const morgan=require('morgan');
+const cors = require('cors');
 
 const UserRouter = require('./routes/userroute')
 const RestaurantRouter = require('./routes/restaurantroute')
@@ -23,6 +24,8 @@ app.use(function (req,res,next) {
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
 app.use(express.urlencoded({extended:true}));
+app.options('*', cors());
+app.use(cors());
 
 app.use('/user', UserRouter);
 app.use('/restaurant', RestaurantRouter);
