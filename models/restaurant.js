@@ -24,7 +24,6 @@ const RestaurantSchema = new mongoose.Schema({
     },
     Categoryid: {
         type: String,
-        required:true
     }
 })
 

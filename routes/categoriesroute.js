@@ -67,15 +67,11 @@ router.delete('/', (req, res)=>{
     })
 })
 
-router.delete('/:id', (req, res)=>{
-    const id = req.params.id;
-    Category.remove({_id:id}).exec().then(result=>{
-        res.status(200).json(res);
-    }).catch(err=>{
-        console.log(err)
-        res.status(500).json({
-            error:err
-        })
+router.delete('/:id', function(req, res){
+    Category.findByIdAndDelete(req.params.id).then(function(){
+        res.send("deleted")
+    }).catch(function(){
+        res.send(e)
     })
 })
 
