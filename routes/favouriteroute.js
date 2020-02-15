@@ -4,6 +4,16 @@ const router = express.Router();
 const auth = require('../auth');
 const Food = require('../models/food');
 
+router.post('/', auth.verifyUser, async(req,res)=>{
+    const newFavourite = new Favourite({
+        userid:req.user._id,
+        foodid:req.body.foodid
+    });
+    newFavourite.save().then((FavouriteDoc)=>{
+        res.send(FavouriteDoc);
+    });
+});
+
 router.get('/', auth.verifyUser , async (req,res)=>{
     Favourite.find({userid: req.user._id})
         .populate('foodid')
@@ -14,16 +24,6 @@ router.get('/', auth.verifyUser , async (req,res)=>{
         res.send(e)
     })
 });
-
-router.post('/', auth.verifyUser, async(req,res)=>{
-    const newFavourite = new Favourite({
-        userid:req.user._id,
-        foodid:req.body.foodid
-    });
-    newFavourite.save().then((FavouriteDoc)=>{
-        res.send(FavouriteDoc);
-    });
-})
 
 router.delete('/', (req, res)=>{
     Favourite.deleteMany({})
