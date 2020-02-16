@@ -21,11 +21,12 @@ app.use(function (req,res,next) {
     next();
 });
 
+app.options('*', cors());
+app.use(cors());
+
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
 app.use(express.urlencoded({extended:true}));
-app.options('*', cors());
-app.use(cors());
 
 app.use('/user', UserRouter);
 app.use('/restaurant', RestaurantRouter);

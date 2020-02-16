@@ -5,6 +5,7 @@ const multer = require('multer')
 const path = require('path')
 const Restaurant = require('../models/restaurant');
 const router = express.Router()
+const auth = require('../auth')
 
 //path to store image
 const storage = multer.diskStorage({
@@ -54,7 +55,7 @@ router.post('/', upload.single('FoodImage'),(req,res)=>{
 router.get('/:id', (req,res,next)=>{
     Food.findById(req.params.id).exec().then(doc=>{
         console.log(doc);
-        res.status(200).json({doc})        
+        res.send(doc.toJSON());
     })
     .catch(err=>{
         console.log(err)
@@ -87,13 +88,30 @@ router.get('/search/:foodName', async (req, res) => {
 });
 
 //get single food and update
-router.put('/:id', ((req,res,next)=>{
-    Food.findOneAndUpdate({_id: req.params.id }, {$set: req.body}, {new: true})
-        .then((reply) => {
-            if (reply == null) throw new Error("Food not found");
-            res.json(reply);
-        }).catch(next);
-}));
+router.patch('/:foodId', upload.single('FoodImage'),(req,res)=>{
+    Food.findOne({
+        _id: req.params.foodId
+    }).then((food)=>{
+        if (food){
+            return true;
+        }
+        return false;
+    }).then((canUploadImage) => {
+        if (canUploadImage) {
+            Food.findOneAndUpdate({
+                    _id: req.params.foodId
+                }, {
+                    $set: req.body,
+                    FoodImage: req.file.filename
+                }
+            ).then(() => {
+                res.send({message: 'food has been updated successfully'})
+            })
+        } else {
+            res.sendStatus(404);
+        }
+    })
+});
 
 router.delete('/', (req, res)=>{
     Food.deleteMany({})
