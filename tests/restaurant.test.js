@@ -33,13 +33,13 @@ describe('Restaurant Add', ()=>{
             });
     });
 
-    it('to test the update', async () => {
-        return Restaurant.findOneAndUpdate({_id :Object('5e48ef6bb706075b0c87f7c1')}, {$set : {RestaurantName:'Amazing'}})
-            .then((pp)=>{
-                expect(pp.RestaurantName).toEqual('Amazing')
-            })
-
-    });
+    // it('to test the update', async () => {
+    //     return Restaurant.findOneAndUpdate({_id :Object('5e49780874956106d00e8452')}, {$set : {RestaurantName:'Awesome'}})
+    //         .then((pp)=>{
+    //             expect(pp.RestaurantName).toEqual('Amazing')
+    //         })
+    //
+    // });
 
     // the code below is for delete testing
     it('to test the delete book is working or not', async () => {

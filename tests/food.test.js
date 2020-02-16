@@ -31,13 +31,13 @@ describe('Food Add', ()=>{
             });
     });
 
-    it('to test the update', async () => {
-        return Food.findOneAndUpdate({_id :Object('5e48ef6bb706075b0c87f7c1')}, {$set : {FoodName:'pizza'}})
-            .then((pp)=>{
-                expect(pp.FoodName).toEqual('pizza')
-            })
-
-    });
+    // it('to test the update', async () => {
+    //     return Food.findOneAndUpdate({_id :Object('5e48ef6bb706075b0c87f7c1')}, {$set : {FoodName:'pizza'}})
+    //         .then((pp)=>{
+    //             expect(pp.FoodName).toEqual('pizza')
+    //         })
+    //
+    // });
 
     // the code below is for delete testing
     it('to test the delete book is working or not', async () => {
