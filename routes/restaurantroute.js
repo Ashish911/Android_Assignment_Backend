@@ -77,23 +77,21 @@ router.get('/getByCategory/:id', async(req,res)=>{
 })
 
 //get single restaurant or items by id
-router.patch('/:restaurantid',upload.single('Logo'),(req, res) => {
-    // We want to upload a image in a restaurant specified by restaurantId
+router.patch('/:restaurantId',upload.single('Logo'),(req, res) => {
     Restaurant.findOne({
-        _id: req.params.restaurantid
+        _id: req.params.restaurantId
     }).then((restaurant) => {
         if (restaurant) {
-            // restaurant object with the specified conditions was found
             return true;
         }
-        // else - the restaurant object is undefined
         return false;
     }).then((canUploadImage) => {
         if (canUploadImage) {
             Restaurant.findOneAndUpdate({
-                    _id: req.params.restaurantid
+                    _id: req.params.restaurantId
                 }, {
-                    $set: req.body
+                    $set: req.body,
+                    Logo: req.file.filename
                 }
             ).then(() => {
                 res.send({ message: 'Restaurant updated successfully' })

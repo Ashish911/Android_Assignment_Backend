@@ -73,13 +73,24 @@ router.post('/login', (req, res, next) => {
 })
 
 router.delete('/:id', function(req, res){
-    //console.log(req.params.id);
-    Users.findByIdAndDelete(req.params.id).then(function(){
+    User.findByIdAndDelete(req.params.id).then(function(){
         res.send("deleted")
     }).catch(function(){ 
         res.send(e)
     })
     })
+
+router.get('/search/:UserName', async (req, res) => {
+    const searchName = req.params.UserName;
+    console.log(searchName);
+    try {
+        const search = await User.find({$text:{$search:searchName}})
+        res.send(search);
+    } catch (error) {
+        res.status(400).send(error)
+    }
+
+});
 
 router.get('/me', auth.verifyUser, (req, res, next) => {
     res.json({ _id: req.user._id, FullName: req.user.FullName,
