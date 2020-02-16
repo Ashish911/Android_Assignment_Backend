@@ -20,10 +20,11 @@ const RestaurantSchema = new mongoose.Schema({
         required:true
     },
     Delivery: {
-        type:String
+        type:String,
+        required:true
     },
     Categoryid: {
-        type: String,
+        type: String
     }
 })
 
