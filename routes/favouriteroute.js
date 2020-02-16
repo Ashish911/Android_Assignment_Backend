@@ -34,6 +34,14 @@ router.delete('/', (req, res)=>{
     })
 })
 
+router.delete('/:id', (req, res)=>{
+    Favourite.findByIdAndDelete(req.params.id).then(function(){
+        res.send("deleted")
+    }).catch(function(){
+        res.send(e)
+    })
+})
+
 router.get('/all', auth.verifyUser, async (req, res) => {
     Favourite.findOne({
         userid: req.user._id
